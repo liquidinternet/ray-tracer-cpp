@@ -1,0 +1,8 @@
+# finder metadata
+.DS_Store
+
+# vscode metadata
+.vscode
+
+# build files
+/build
