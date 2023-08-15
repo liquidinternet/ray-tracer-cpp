@@ -1,9 +1,9 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "colour.h"
-#include "material.h"
-#include "sphere.h"
+#include "colour.hpp"
+#include "material.hpp"
+#include "sphere.hpp"
 #include <iostream>
 
 class camera {

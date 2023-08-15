@@ -1,7 +1,7 @@
 #ifndef VEC3_H
 #define VEC3_H
 
-#include "common.h"
+#include "common.hpp"
 #include <cmath>
 #include <iostream>
 

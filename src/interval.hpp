@@ -1,7 +1,7 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 
-#include "common.h"
+#include "common.hpp"
 
 class interval {
 public:
@@ -32,6 +32,7 @@ public:
 	}
 
 	static const interval empty, universe;
+
 };
 
 const static interval empty(+infinity, -infinity);

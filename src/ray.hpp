@@ -1,7 +1,7 @@
 #ifndef RAY_H
 #define RAY_H
 
-#include "point3.h"
+#include "point3.hpp"
 
 class ray {
 public:

@@ -1,8 +1,8 @@
 #ifndef COLOUR_H
 #define COLOUR_H
 
-#include "interval.h"
-#include "vec3.h"
+#include "interval.hpp"
+#include "vec3.hpp"
 #include <iostream>
 
 // colour is an alias for vec3, useful for code clarity
