@@ -1,33 +1,28 @@
-#ifndef COMMON_H
-#define COMMON_H
-
-#include <cmath>
-#include <cstdlib>
-#include <limits>
+#pragma once
 #include <memory>
+#include <numbers>
+#include <random>
 
 // usings
 using std::make_shared;
 using std::shared_ptr;
-using std::sqrt;
 
 // constants
 const double infinity = std::numeric_limits<double>::infinity();
-const double pi = 3.1415926535897932385;
 
-inline double degrees_to_radians(double degrees) {
+inline double degreesToRadians(double degrees) {
 	// convert value in degrees and return value in radians
-	return degrees * pi / 180.0;
+	return degrees * (std::numbers::pi / 180.0);
 }
 
-inline double random_double() {
+inline double randomDouble() {
 	// generate a random double-precision number in the range [0, 1)
-	return rand() / (RAND_MAX + 1.0);
+	static std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    static std::mt19937 generator(std::random_device{}());
+    return distribution(generator);
 }
 
-inline double random_double(double min, double max) {
+inline double randomDouble(double min, double max) {
 	// generate a random double-precision number in the range [min, max)
-	return min + (max - min) * random_double();
+	return min + (max - min) * randomDouble();
 }
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef CAMERA_H
-#define CAMERA_H
-
+#pragma once
 #include "colour.hpp"
 #include "material.hpp"
 #include "sphere.hpp"
@@ -34,10 +32,10 @@ public:
 			for (int i = 0; i < image_width; ++i) {
 				colour pixel_colour(0, 0, 0);
 				for (int sample = 0; sample < samples_per_pixel; ++sample) {
-					ray r = get_ray(i, j);
-					pixel_colour += ray_colour(r, ray_depth, world);
+					ray r = getRay(i, j);
+					pixel_colour += rayColour(r, ray_depth, world);
 				}
-				write_colour(std::cout, pixel_colour, samples_per_pixel);
+				writeColour(std::cout, pixel_colour, samples_per_pixel);
 			}
 		}
 
@@ -63,14 +61,14 @@ private:
 		center = look_from;
 
 		// calculate viewport dimensions.
-		auto theta = degrees_to_radians(v_fov);
+		auto theta = degreesToRadians(v_fov);
 		auto h = tan(theta / 2);
 		auto viewport_height = 2 * h * focus_distance;
 		auto viewport_width = viewport_height * (static_cast<double>(image_width) / image_height);
 
 		// calculate u, v, w unit basis vectors for camera coordinate frame
-		w = unit_vector(look_from - look_at);
-		u = unit_vector(cross(v_up, w));
+		w = unitVector(look_from - look_at);
+		u = unitVector(cross(v_up, w));
 		v = cross(w, u);
 
 		// calculate the vectors across the horizontal and down the vertical viewport edges
@@ -86,12 +84,12 @@ private:
 		pixel_00_location = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
 		// calculate the camera defocus disk basis vectors
-		auto defocus_radius = focus_distance * tan(degrees_to_radians(defocus_angle / 2));
+		auto defocus_radius = focus_distance * tan(degreesToRadians(defocus_angle / 2));
 		defocus_disk_u = u * defocus_radius;
 		defocus_disk_v = v * defocus_radius;
 	}
 
-	colour ray_colour(const ray& r, int depth, const hittable& world) const {
+	colour rayColour(const ray& r, int depth, const hittable& world) const {
 		// placeholder for record
 		hit_record record;
 
@@ -104,40 +102,38 @@ private:
 			ray scattered;
 			colour attenuation;
 			if (record.mat->scatter(r, record, attenuation, scattered)) {
-				return attenuation * ray_colour(scattered, depth - 1, world);
+				return attenuation * rayColour(scattered, depth - 1, world);
 			}
 			return colour(0, 0, 0);
 		}
 
-		vec3 unit_direction = unit_vector(r.direction());
+		vec3 unit_direction = unitVector(r.direction());
 		auto a = 0.5 * (unit_direction.y() + 1.0);
 		return (1.0 - a) * colour(1.0, 1.0, 1.0) + a * colour(0.5, 0.7, 1.0);
 	}
 
-	ray get_ray(int i, int j) const {
+	ray getRay(int i, int j) const {
 		// get randomly-sampled camera ray for the pixel at location i, j originating from the camera defocus disk
 		auto pixel_center = pixel_00_location + (i * pixel_delta_u) + (j * pixel_delta_v);
-		auto pixel_sample = pixel_center + pixel_sample_square();
+		auto pixel_sample = pixel_center + pixelSampleSquare();
 
-		auto ray_origin = (defocus_angle <= 0) ? center : defocus_disk_sample();
+		auto ray_origin = (defocus_angle <= 0) ? center : defocusDiskSample();
 		auto ray_direction = pixel_sample - ray_origin;
 
 		return ray(ray_origin, ray_direction);
 	}
 
-	vec3 pixel_sample_square() const {
+	vec3 pixelSampleSquare() const {
 		// returns a random point in the square surrounding a pixel at the origin
-		auto px = -0.5 + random_double();
-		auto py = -0.5 + random_double();
+		auto px = -0.5 + randomDouble();
+		auto py = -0.5 + randomDouble();
 		return (px * pixel_delta_u) + (py * pixel_delta_v);
 	}
 
-	point3 defocus_disk_sample() const {
+	point3 defocusDiskSample() const {
 		// returns a random point in the camera defocus disk
-		auto p = random_in_unit_disk();
+		auto p = randomInUnitDisk();
 		return center + (p[0] * defocus_disk_u) + (p[1] * defocus_disk_v);
 	}
 
 };
-
-#endif

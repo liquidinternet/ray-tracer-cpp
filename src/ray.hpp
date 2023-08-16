@@ -1,6 +1,4 @@
-#ifndef RAY_H
-#define RAY_H
-
+#pragma once
 #include "point3.hpp"
 
 class ray {
@@ -22,5 +20,3 @@ private:
 	vec3 dir;
 
 };
-
-#endif

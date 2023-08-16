@@ -1,6 +1,4 @@
-#ifndef HITTABLE_LIST_H
-#define HITTABLE_LIST_H
-
+#pragma once
 #include "hittable.hpp"
 #include <memory>
 #include <vector>
@@ -35,5 +33,3 @@ public:
 		return hit_anything;
 	}
 };
-
-#endif

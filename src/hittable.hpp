@@ -1,6 +1,4 @@
-#ifndef HITTABLE_H
-#define HITTABLE_H
-
+#pragma once
 #include "ray.hpp"
 
 class material;
@@ -14,7 +12,7 @@ public:
 	double t;
 	bool front_face;
 
-	void set_face_normal(const ray &r, const vec3 &outward_normal) {
+	void setFaceNormal(const ray &r, const vec3 &outward_normal) {
 		// sets the hit record normal vector
 		front_face = dot(r.direction(), outward_normal) < 0;
 		normal = front_face ? outward_normal : -outward_normal;
@@ -29,5 +27,3 @@ public:
 	virtual bool hit(const ray &r, interval ray_t, hit_record &rec) const = 0;
 
 };
-
-#endif

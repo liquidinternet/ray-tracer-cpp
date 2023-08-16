@@ -1,5 +1,5 @@
-#include "colour.hpp"
 #include "camera.hpp"
+#include "colour.hpp"
 #include "dielectric.hpp"
 #include "lambertian.hpp"
 #include "metal.hpp"
@@ -17,8 +17,8 @@ int main() {
 	for (int a = -11; a < 11; a++) {
 		for (int b = -11; b < 11; b++) {
 
-			auto material_selector = random_double();
-			point3 center(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
+			auto material_selector = randomDouble();
+			point3 center(a + 0.9 * randomDouble(), 0.2, b + 0.9 * randomDouble());
 
 			if ((center - point3(4, 0.2, 0)).length() > 0.9) {
 
@@ -32,7 +32,7 @@ int main() {
 				} else if (material_selector < 0.95) {
 					// metal
 					auto albedo = colour::random(0.5, 1);
-					auto fuzz = random_double(0, 0.5);
+					auto fuzz = randomDouble(0, 0.5);
 					sphere_material = make_shared<metal>(albedo, fuzz);
 					scene.add(make_shared<sphere>(center, 0.2, sphere_material));
 				} else {
@@ -46,14 +46,14 @@ int main() {
 	}
 
 	// add three large spheres to scene
-	auto material1 = make_shared<dielectric>(1.5);
-	scene.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
+	auto material_a = make_shared<dielectric>(1.5);
+	scene.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material_a));
 
-	auto material2 = make_shared<lambertian>(colour(0.4, 0.2, 0.1));
-	scene.add(make_shared<sphere>(point3(-4, 1, 0), 1.0, material2));
+	auto material_b = make_shared<lambertian>(colour(0.4, 0.2, 0.1));
+	scene.add(make_shared<sphere>(point3(-4, 1, 0), 1.0, material_b));
 
-	auto material3 = make_shared<metal>(colour(0.7, 0.6, 0.5), 0.0);
-	scene.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
+	auto material_c = make_shared<metal>(colour(0.7, 0.6, 0.5), 0.0);
+	scene.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material_c));
 
 	// create camera
 	camera camera;

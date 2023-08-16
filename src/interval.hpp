@@ -1,6 +1,4 @@
-#ifndef INTERVAL_H
-#define INTERVAL_H
-
+#pragma once
 #include "common.hpp"
 
 class interval {
@@ -37,5 +35,3 @@ public:
 
 const static interval empty(+infinity, -infinity);
 const static interval universe(-infinity, +infinity);
-
-#endif
