@@ -3,14 +3,21 @@
 #include <cmath>
 #include <iostream>
 
-// define a 3d vector
+// a class representing a 3d vector
 class vec3 {
 public:
 
 	double e[3];			// three components of the vector (x, y, z)
 
-	// constructors
-	vec3() : e{ 0, 0, 0 } { }
+	// default constructor
+	vec3()
+		: e{ 0, 0, 0 } { }
+
+	// constructor to initialise the vector with three values
+	// parameters:
+	//    e0: x component
+	//    e1: y component
+	//    e2: z component
 	vec3(double e0, double e1, double e2)
 		: e{ e0, e1, e2} { }
 

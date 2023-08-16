@@ -8,7 +8,7 @@ public:
 	// constructor to initialize the dielectric material
 	// parameters:
 	//   index_of_refraction: the index of refraction
-	dielectric(double index_of_refraction) : ior(index_of_refraction) {}
+	dielectric(double index_of_refraction) : _ior(index_of_refraction) {}
 
 	// scatter function for simulating interaction between a ray and a material
 	// parameters:
@@ -20,7 +20,7 @@ public:
 	//   true if scattering occurs (and it always does)
 	bool scatter(const ray &r_in, const hit_record &rec, colour &attenuation, ray &scattered) const override {
 		// calculate the ratio of indices of refraction.
-		auto refraction_ratio = rec.front_face ? (1.0 / ior) : ior;
+		auto refraction_ratio = rec.front_face ? (1.0 / _ior) : _ior;
 		// compute values needed for refraction and reflection
 		auto unit_direction = unitVector(r_in.direction());
 		auto cos_theta = fmin(dot(-unit_direction, rec.normal), 1.0);
@@ -43,17 +43,17 @@ public:
 
 private:
 
-	double ior;			// the index of refraction
+	double _ior;			// the index of refraction
 
 	// calculate schlick's approximation for reflectance
 	// parameters:
-    //   cosine: cosine of the angle between the ray and the normal
-    //   ior: index of refraction
-    // returns:
-    //   estimated reflectance value
+	//   cosine: cosine of the angle between the ray and the normal
+	//   ior: index of refraction
+	// returns:
+	//   estimated reflectance value
 	static double reflectance(double cosine, double ior) {
 		// calculate the fresnel reflectance using schlick's approximation
-    	// r0 = reflection coefficient at normal incidence
+		// r0 = reflection coefficient at normal incidence
 		auto r0 = (1 - ior) / (1 + ior);
 		r0 = r0 * r0;
 		// calculate reflectance based on schlick's formula (considering the cosine of the angle of incidence)

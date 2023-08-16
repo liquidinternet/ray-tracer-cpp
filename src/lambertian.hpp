@@ -8,7 +8,7 @@ public:
 	// constructor to initialize the diffuse material
 	// parameters:
 	//   a: the albedo colour of the surface
-	lambertian(const colour &a) : albedo(a) {}
+	lambertian(const colour &a) : _albedo(a) {}
 
 	// scatter function for simulating interaction between a ray and a material
 	// parameters:
@@ -28,13 +28,13 @@ public:
 		// create the scattered ray
 		scattered = ray(rec.p, scatter_direction);
 		// set attenuation to the material's albedo
-		attenuation = albedo;
+		attenuation = _albedo;
 		// always scatters
 		return true;
 	}
 
 private:
 
-	colour albedo;		// the albedo colour of the surface
+	colour _albedo;		// the albedo colour of the surface
 
 };

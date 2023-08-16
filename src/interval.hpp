@@ -1,37 +1,34 @@
 #pragma once
 #include "common.hpp"
 
+// a class representing a closed interval between two values
 class interval {
 public:
 
-	double min;
-	double max;
+    double min;				// minimum value of the interval
+    double max;				// maximum value of the interval
 
-	interval() : min(+infinity), max(-infinity) {}
+	// default constructor
+	interval()
+		: min(+infinity), max(-infinity) { }
 
-	interval(double _min, double _max) : min(_min), max(_max) {}
+	// constructor to initialise interval with min and max values
+	interval(double _min, double _max)
+		: min(_min), max(_max) { }
 
+  	// check if interval contains a specific value
 	bool contains(double x) const {
 		return min <= x && x <= max;
 	}
 
+ 	// check if the interval surrounds a specific value
 	bool surrounds(double x) const {
 		return min < x && x < max;
 	}
 
+ 	// clamp value to range of interval
 	double clamp(double x) const {
-		if (x < min) {
-			return min;
-		}
-		if (x > max) {
-			return max;
-		}
-		return x;
+		return std::clamp(x, min, max);
 	}
 
-	static const interval empty, universe;
-
 };
-
-const static interval empty(+infinity, -infinity);
-const static interval universe(-infinity, +infinity);

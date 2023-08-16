@@ -20,9 +20,9 @@ inline double randomDouble() {
 	// define a static distribution that generates random doubles in the range [0.0, 1.0)
 	static std::uniform_real_distribution<double> distribution(0.0, 1.0);
 	// define a static random number generator initialised with a seed from std::random_device
-    static std::mt19937 generator(std::random_device{}());
+	static std::mt19937 generator(std::random_device{}());
 	// return random double using distribution and generator
-    return distribution(generator);
+	return distribution(generator);
 }
 
 // generate a random double-precision number in the range [min, max)

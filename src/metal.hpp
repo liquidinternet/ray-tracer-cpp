@@ -10,7 +10,7 @@ public:
 	//   a: the albedo colour of the surface
 	//   f: the fuzziness of the material (reflection blur), values larger than 1 result in perfect reflection
 	metal(const colour &a, double f)
-		: albedo(a), fuzz(f < 1 ? f : 1) { }
+		: _albedo(a), _fuzz(f < 1 ? f : 1) { }
 
 	// scatter function for simulating interaction between a ray and a material
 	// parameters:
@@ -26,20 +26,20 @@ public:
 		// calculate reflected direction based on ray direction and surface normal
 		auto reflected = reflect(unit_vector, rec.normal);
 		// calculate a random scattering direction with a slight random deviation (fuzziness) for reflection blur
-		auto scatter_direction = reflected + fuzz * randomUnitVector();
+		auto scatter_direction = reflected + _fuzz * randomUnitVector();
 		// create the scattered ray
 		scattered = ray(rec.p, scatter_direction);
 		// set attenuation to the material's albedo
-		attenuation = albedo;
+		attenuation = _albedo;
 		// angle between the scattered ray direction and normal
 		auto angle = dot(scattered.direction(), rec.normal);
-        // returns true angle is positive (eg. above the surface)
+		// returns true angle is positive (eg. above the surface)
 		return (angle > 0);
 	}
 
 private:
 
-	colour albedo;			// albedo colour of the metal
-	double fuzz;			// fuzziness factor for reflection blur
+	colour _albedo;			// albedo colour of the metal
+	double _fuzz;			// fuzziness factor for reflection blur
 
 };
