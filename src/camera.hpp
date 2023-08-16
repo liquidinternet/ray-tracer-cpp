@@ -132,7 +132,7 @@ private:
 
 	point3 defocusDiskSample() const {
 		// returns a random point in the camera defocus disk
-		auto p = randomInUnitDisk();
+		auto p = randomPointInUnitDisk();
 		return center + (p[0] * defocus_disk_u) + (p[1] * defocus_disk_v);
 	}
 
