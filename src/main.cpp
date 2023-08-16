@@ -17,6 +17,7 @@ int main() {
 	for (int a = -11; a < 11; a++) {
 		for (int b = -11; b < 11; b++) {
 
+			// randomly select material for each sphere
 			auto material_selector = randomDouble();
 			point3 center(a + 0.9 * randomDouble(), 0.2, b + 0.9 * randomDouble());
 
@@ -75,4 +76,6 @@ int main() {
 	// render
 	camera.render(scene);
 
+	// successful execution
+    return 0;
 }

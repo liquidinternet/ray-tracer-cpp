@@ -1,7 +1,7 @@
 #pragma once
 #include "common.hpp"
 
-// a class representing a closed interval between two values
+// a class representing an interval between two values
 class interval {
 public:
 

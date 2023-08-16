@@ -28,7 +28,7 @@ public:
 		// calculate a random scattering direction with a slight random deviation (fuzziness) for reflection blur
 		auto scatter_direction = reflected + _fuzz * randomUnitVector();
 		// create the scattered ray
-		scattered = ray(rec.p, scatter_direction);
+		scattered = ray(rec.point, scatter_direction);
 		// set attenuation to the material's albedo
 		attenuation = _albedo;
 		// angle between the scattered ray direction and normal

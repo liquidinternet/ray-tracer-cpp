@@ -34,7 +34,7 @@ public:
 			direction = refract(unit_direction, rec.normal, refraction_ratio);
 		}
   		// create the scattered ray
-		scattered = ray(rec.p, direction);
+		scattered = ray(rec.point, direction);
 		// set attenuation to white
 		attenuation = colour(1.0, 1.0, 1.0);
 		// always scatters

@@ -4,6 +4,7 @@
 #include "sphere.hpp"
 #include <iostream>
 
+// a class representing a camera used to render a scene
 class camera {
 public:
 
@@ -18,21 +19,29 @@ public:
 	double defocus_angle = 0;					// variation angle of rays through each pixel
 	double focus_distance = 10;					// distance from camera 'from point' to plane of focus
 
+	// render the scene
+	// parameters:
+	//   world: the specified hittable world
 	void render(const hittable& world) {
-		// initialise camera
+		// initialise camera parameters
 		initialise();
 
-		// image header
+		// image header (.ppm format)
 		std::cout << "P3\n"
-				  << image_width << ' ' << _image_height << "\n255\n";
+				  << image_width << " " << _image_height << "\n255\n";
 
 		for (int j = 0; j < _image_height; ++j) {
-			// log output
-			std::clog << "\rScanlines remaining: " << (_image_height - j) << ' ' << std::flush;
+			// log progress
+			std::clog << "\rScanlines remaining: " << (_image_height - j) << " " << std::flush;
+			// loop through pixels
 			for (int i = 0; i < image_width; ++i) {
+				// calculate pixel colour by accumulating samples
 				colour pixel_colour(0, 0, 0);
+				// loop through samples
 				for (int sample = 0; sample < samples_per_pixel; ++sample) {
+					// get camera ray for the pixel
 					auto r = getRay(i, j);
+					// set colour
 					pixel_colour += rayColour(r, ray_depth, world);
 				}
 				writeColour(std::cout, pixel_colour, samples_per_pixel);
@@ -40,7 +49,7 @@ public:
 		}
 
 		// log completion
-		std::clog << "\rDone.\n";
+		std::clog << "\rRender complete                     \n";
 	}
 
 private:
@@ -54,13 +63,16 @@ private:
 	vec3 _defocus_disk_u;						// defocus disk horizontal radius
 	vec3 _defocus_disk_v;						// defocus disk vertical radius
 
+	// initialize camera parameters
 	void initialise() {
 
+
+		// calculate image height based on the aspect ratio
 		_image_height = static_cast<int>(image_width / aspect_ratio);
 		_image_height = (_image_height < 1) ? 1 : _image_height;
 		_centre = look_from;
 
-		// calculate viewport dimensions.
+		// calculate viewport dimensions
 		auto theta = degreesToRadians(v_fov);
 		auto h = tan(theta / 2);
 		auto viewport_height = 2 * h * focus_distance;
@@ -89,50 +101,74 @@ private:
 		_defocus_disk_v = _v * defocus_radius;
 	}
 
+	// calculate colour of a ray by tracing interactions within the scene
+	// parameters:
+	//   r: the ray
+	//   depth: ray bounce limit
+	//   world: the specified hittable world
+	// returns:
+	//   ray colour
 	colour rayColour(const ray& r, int depth, const hittable& world) const {
 		// placeholder for record
 		hit_record record;
-
 		// check if exceeded the ray bounce limit (no more light gathered)
 		if (depth <= 0) {
 			return colour(0, 0, 0);
 		}
-
+		// check for ray / object intersection
 		if (world.hit(r, interval(0.001, infinity), record)) {
 			ray scattered;
 			colour attenuation;
-			if (record.mat->scatter(r, record, attenuation, scattered)) {
+			 // if material of the hit object scatters the ray, calculate the scattered ray and attenuation
+			if (record.material->scatter(r, record, attenuation, scattered)) {
+				// recursively trace scattered rays and calculate color
 				return attenuation * rayColour(scattered, depth - 1, world);
 			}
+			// return colour
 			return colour(0, 0, 0);
 		}
-
+		// no intersection found, create a simple gradient background
 		auto unit_direction = unitVector(r.direction());
 		auto a = 0.5 * (unit_direction.y() + 1.0);
+		// linear interpolation between white and blue based on the ray's vertical direction.
 		return (1.0 - a) * colour(1.0, 1.0, 1.0) + a * colour(0.5, 0.7, 1.0);
 	}
 
+	// generate randomly-sampled camera ray
+	// parameters:
+	//   i:	input i
+	//   j: input j
+	// returns:
+	//   a camera ray
 	ray getRay(int i, int j) const {
-		// get randomly-sampled camera ray for the pixel at location i, j originating from the camera defocus disk
+		// calculate the center of the pixel
 		auto pixel_center = _pixel_zero_location + (i * _pixel_delta_u) + (j * _pixel_delta_v);
+		// generate a random offset within the pixel
 		auto pixel_sample = pixel_center + pixelSampleSquare();
-
+		// calculate the ray origin and direction
 		auto ray_origin = (defocus_angle <= 0) ? _centre : defocusDiskSample();
 		auto ray_direction = pixel_sample - ray_origin;
-
+		// return camera ray
 		return ray(ray_origin, ray_direction);
 	}
 
+	// generate a random vector in the square surrounding a pixel at the origin
+	// returns:
+	//   a vector within the square surrounding the pixel at the origin
 	vec3 pixelSampleSquare() const {
-		// returns a random point in the square surrounding a pixel at the origin
+		// returns
 		auto px = -0.5 + randomDouble();
 		auto py = -0.5 + randomDouble();
 		return (px * _pixel_delta_u) + (py * _pixel_delta_v);
 	}
 
+	// generate a random point in the camera defocus disk
+	// returns:
+	//   a random point
 	point3 defocusDiskSample() const {
-		// returns a random point in the camera defocus disk
+		// generate a random point in the unit disk
 		auto p = randomPointInUnitDisk();
+		// calculate the point within the defocus disk
 		return _centre + (p[0] * _defocus_disk_u) + (p[1] * _defocus_disk_v);
 	}
 
