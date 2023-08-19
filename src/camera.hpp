@@ -15,7 +15,7 @@ public:
 	double v_fov = 90;							// vertical field of view
 	point3 look_from = point3(0, 0, -1);		// point camera is looking from
 	point3 look_at = point3(0, 0, 0);			// point camera is looking at
-	vec3 v_up = vec3(0, 1, 0);					// camera-relative "up" direction
+	vec3 v_up = vec3(0, 1, 0);					// camera-relative 'up' direction
 	double defocus_angle = 0;					// variation angle of rays through each pixel
 	double focus_distance = 10;					// distance from camera 'from point' to plane of focus
 
