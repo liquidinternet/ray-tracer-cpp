@@ -5,8 +5,8 @@
 class interval {
 public:
 
-    double min;				// minimum value of the interval
-    double max;				// maximum value of the interval
+	double min;				// minimum value of the interval
+	double max;				// maximum value of the interval
 
 	// default constructor
 	interval()

@@ -5,9 +5,9 @@
 class sphere : public hittable {
 public:
 
-    // constructor to initialise sphere with a center, radius, and material
-	sphere(point3 _center, double _radius, shared_ptr<material> _material)
-		: _centre(_center), _radius(_radius), _material(_material) { }
+	// constructor to initialise sphere with a centre, radius, and material
+	sphere(point3 _centre, double _radius, shared_ptr<material> _material)
+		: _centre(_centre), _radius(_radius), _material(_material) { }
 
 	// check for ray / sphere intersection
 	// parameters:
@@ -17,7 +17,7 @@ public:
 	// returns:
 	//   true if an intersection matched else false
 	bool hit(const ray &r, interval ray_t, hit_record &rec) const override {
-		// calculate vector from ray origin to sphere center
+		// calculate vector from ray origin to sphere centre
 		vec3 oc = r.origin() - _centre;
 		// coefficients for ray-sphere intersection
 		auto a = r.direction().lengthSquared();

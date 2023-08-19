@@ -15,9 +15,9 @@ public:
 
 	// constructor to initialise the vector with three values
 	// parameters:
-	//    e0: x component
-	//    e1: y component
-	//    e2: z component
+	//   e0: x component
+	//   e1: y component
+	//   e2: z component
 	vec3(double e0, double e1, double e2)
 		: e{ e0, e1, e2} { }
 

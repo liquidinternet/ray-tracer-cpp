@@ -54,7 +54,7 @@ public:
 private:
 
 	int _image_height;							// rendered image height
-	point3 _centre;								// camera center
+	point3 _centre;								// camera centre
 	point3 _pixel_zero_location;				// location of pixel 0, 0
 	vec3 _pixel_delta_u;						// offset to pixel to the right
 	vec3 _pixel_delta_v;						// offset to pixel below
@@ -62,7 +62,7 @@ private:
 	vec3 _defocus_disk_u;						// defocus disk horizontal radius
 	vec3 _defocus_disk_v;						// defocus disk vertical radius
 
-	// initialize camera parameters
+	// initialise camera parameters
 	void initialise() {
 
 		// calculate image height based on the aspect ratio
@@ -119,7 +119,7 @@ private:
 			colour attenuation;
 			 // if material of the hit object scatters the ray, calculate the scattered ray and attenuation
 			if (record.material->scatter(r, record, attenuation, scattered)) {
-				// recursively trace scattered rays and calculate color
+				// recursively trace scattered rays and calculate colour
 				return attenuation * rayColour(scattered, depth - 1, world);
 			}
 			// return colour
@@ -139,7 +139,7 @@ private:
 	// returns:
 	//   a camera ray
 	ray getRay(int i, int j) const {
-		// calculate the center of the pixel
+		// calculate the centre of the pixel
 		auto pixel_centre = _pixel_zero_location + (i * _pixel_delta_u) + (j * _pixel_delta_v);
 		// generate a random offset within the pixel
 		auto pixel_sample = pixel_centre + pixelSampleSquare();

@@ -73,5 +73,5 @@ int main() {
 	camera.render(scene);
 
 	// successful execution
-    return 0;
+	return 0;
 }

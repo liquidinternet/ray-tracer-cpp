@@ -15,13 +15,13 @@ inline double linearToGamma(double linear_component) {
 	return sqrt(linear_component);
 }
 
-// write a color value to an output stream with gamma correction and scaling
+// write a colour value to an output stream with gamma correction and scaling
 // parameters:
 //   out: the output stream to write to
 //   pixel_colour: the colour value to be written
 //   samples_per_pixel: the number of samples per pixel for scaling
 void writeColour(std::ostream &out, colour pixel_colour, int samples_per_pixel) {
-	// extract color components
+	// extract colour components
 	auto r = pixel_colour.x();
 	auto g = pixel_colour.y();
 	auto b = pixel_colour.z();

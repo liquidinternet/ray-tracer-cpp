@@ -5,7 +5,7 @@
 class lambertian : public material {
 public:
 
-	// constructor to initialize the diffuse material
+	// constructor to initialise the diffuse material
 	// parameters:
 	//   a: the albedo colour of the surface
 	lambertian(const colour &a) : _albedo(a) {}
@@ -14,7 +14,7 @@ public:
 	// parameters:
 	//   r_in: the ray
 	//   rec: the record containing intersection information
-	//   attenuation: the color attenuation due to the material's interaction
+	//   attenuation: the colour attenuation due to the material's interaction
 	//   scattered: the scattered ray after interaction with the material
 	// returns:
 	//   true if scattering occurs (and it always does)

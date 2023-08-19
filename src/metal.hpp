@@ -5,7 +5,7 @@
 class metal : public material {
 public:
 
-	// constructor to initialize the metal material
+	// constructor to initialise the metal material
 	// parameters:
 	//   a: the albedo colour of the surface
 	//   f: the fuzziness of the material (reflection blur), values larger than 1 result in perfect reflection
@@ -16,7 +16,7 @@ public:
 	// parameters:
 	//   r_in: the ray
 	//   rec: the record containing intersection information
-	//   attenuation: the color attenuation due to the material's interaction
+	//   attenuation: the colour attenuation due to the material's interaction
 	//   scattered: the scattered ray after interaction with the material
 	// returns:
 	//   true if scattering occurs (ray is absorbed and/or redirected), else false

@@ -5,7 +5,7 @@
 class dielectric : public material {
 public:
 
-	// constructor to initialize the dielectric material
+	// constructor to initialise the dielectric material
 	// parameters:
 	//   index_of_refraction: the index of refraction
 	dielectric(double index_of_refraction) : _ior(index_of_refraction) {}
@@ -14,7 +14,7 @@ public:
 	// parameters:
 	//   r_in: the ray
 	//   rec: the record containing intersection information
-	//   attenuation: the color attenuation due to the material's interaction
+	//   attenuation: the colour attenuation due to the material's interaction
 	//   scattered: the scattered ray after interaction with the material
 	// returns:
 	//   true if scattering occurs (and it always does)
