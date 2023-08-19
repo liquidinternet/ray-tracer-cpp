@@ -19,9 +19,9 @@ int main() {
 
 			// randomly select material for each sphere
 			auto material_selector = randomDouble();
-			point3 center(a + 0.9 * randomDouble(), 0.2, b + 0.9 * randomDouble());
+			point3 centre(a + 0.9 * randomDouble(), 0.2, b + 0.9 * randomDouble());
 
-			if ((center - point3(4, 0.2, 0)).length() > 0.9) {
+			if ((centre - point3(4, 0.2, 0)).length() > 0.9) {
 
 				shared_ptr<material> sphere_material;
 
@@ -29,17 +29,17 @@ int main() {
 					// diffuse
 					auto albedo = colour::random() * colour::random();
 					sphere_material = make_shared<lambertian>(albedo);
-					scene.add(make_shared<sphere>(center, 0.2, sphere_material));
+					scene.add(make_shared<sphere>(centre, 0.2, sphere_material));
 				} else if (material_selector < 0.95) {
 					// metal
 					auto albedo = colour::random(0.5, 1);
 					auto fuzz = randomDouble(0, 0.5);
 					sphere_material = make_shared<metal>(albedo, fuzz);
-					scene.add(make_shared<sphere>(center, 0.2, sphere_material));
+					scene.add(make_shared<sphere>(centre, 0.2, sphere_material));
 				} else {
 					// glass
 					sphere_material = make_shared<dielectric>(1.5);
-					scene.add(make_shared<sphere>(center, 0.2, sphere_material));
+					scene.add(make_shared<sphere>(centre, 0.2, sphere_material));
 				}
 			}
 
@@ -58,21 +58,17 @@ int main() {
 
 	// create camera
 	camera camera;
-
 	// override camera defaults
 	camera.aspect_ratio = 16.0 / 9.0;
 	camera.image_width = 400;					// use 1920 for final render
 	camera.samples_per_pixel = 10;				// use 500 samples for final quality render
 	camera.ray_depth = 20;
-
 	camera.v_fov = 20;
 	camera.look_from = point3(13, 2, 3);
 	camera.look_at = point3(0, 0, 0);
 	camera.v_up = vec3(0, 1, 0);
-
 	camera.defocus_angle = 0.6;
 	camera.focus_distance = 10.0;
-
 	// render
 	camera.render(scene);
 

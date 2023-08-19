@@ -16,7 +16,7 @@ public:
 	shared_ptr<material> material;
 	// hit distance along the ray
 	double distance;
-	// wass hit on front face of object
+	// was hit on front face of object
 	bool front_face;
 
 	// sets the hit record normal vector
@@ -29,4 +29,5 @@ public:
 		// set normal direction (in or out)
 		normal = front_face ? outward_normal : -outward_normal;
 	}
+
 };

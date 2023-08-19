@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-// a class representing a collection of hittable objects
+// a derived class representing a collection of hittable objects
 class hittable_list : public hittable {
 public:
 
@@ -14,7 +14,9 @@ public:
 	hittable_list() { }
 
 	// constructor that adds an object to the list upon creation
-	hittable_list(shared_ptr<hittable> object) { add(object); }
+	hittable_list(shared_ptr<hittable> object) {
+		add(object);
+	}
 
 	// add object to the list
 	void add(shared_ptr<hittable> object) {
@@ -22,7 +24,9 @@ public:
 	}
 
 	// clear list of objects
-	void clear() { objects.clear(); }
+	void clear() {
+		objects.clear();
+	}
 
 	// check for intersections within an interval and update hit_record with matches
 	// parameters:

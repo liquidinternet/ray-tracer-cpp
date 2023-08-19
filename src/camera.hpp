@@ -25,11 +25,10 @@ public:
 	void render(const hittable& world) {
 		// initialise camera parameters
 		initialise();
-
 		// image header (.ppm format)
 		std::cout << "P3\n"
 				  << image_width << " " << _image_height << "\n255\n";
-
+		// loop through pixels
 		for (int j = 0; j < _image_height; ++j) {
 			// log progress
 			std::clog << "\rScanlines remaining: " << (_image_height - j) << " " << std::flush;
@@ -44,10 +43,10 @@ public:
 					// set colour
 					pixel_colour += rayColour(r, ray_depth, world);
 				}
+				// write colour
 				writeColour(std::cout, pixel_colour, samples_per_pixel);
 			}
 		}
-
 		// log completion
 		std::clog << "\rRender complete                     \n";
 	}
@@ -65,7 +64,6 @@ private:
 
 	// initialize camera parameters
 	void initialise() {
-
 
 		// calculate image height based on the aspect ratio
 		_image_height = static_cast<int>(image_width / aspect_ratio);
@@ -142,9 +140,9 @@ private:
 	//   a camera ray
 	ray getRay(int i, int j) const {
 		// calculate the center of the pixel
-		auto pixel_center = _pixel_zero_location + (i * _pixel_delta_u) + (j * _pixel_delta_v);
+		auto pixel_centre = _pixel_zero_location + (i * _pixel_delta_u) + (j * _pixel_delta_v);
 		// generate a random offset within the pixel
-		auto pixel_sample = pixel_center + pixelSampleSquare();
+		auto pixel_sample = pixel_centre + pixelSampleSquare();
 		// calculate the ray origin and direction
 		auto ray_origin = (defocus_angle <= 0) ? _centre : defocusDiskSample();
 		auto ray_direction = pixel_sample - ray_origin;
@@ -156,7 +154,6 @@ private:
 	// returns:
 	//   a vector within the square surrounding the pixel at the origin
 	vec3 pixelSampleSquare() const {
-		// returns
 		auto px = -0.5 + randomDouble();
 		auto py = -0.5 + randomDouble();
 		return (px * _pixel_delta_u) + (py * _pixel_delta_v);
