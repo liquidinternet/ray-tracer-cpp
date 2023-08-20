@@ -4,6 +4,6 @@ This repository is based on the series [Ray Tracing in One Weekend](https://gith
 
 ![A rendered image produced by this ray tracer.](render.png)
 
-A sample image, rendered at 1920x1080 using 500 samples per pixel.
+A sample scene, rendered at 1920x1080 using 500 samples per pixel.
 
-Code compiled using C++20 and Clang. Tested on macOS running on Apple Silicon.
+After building, run `./build/main > render.ppm` to render scene to a file. Code compiled using C++20 and Clang. Tested on macOS running on Apple Silicon.
